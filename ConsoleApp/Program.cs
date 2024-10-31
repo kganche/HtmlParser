@@ -1,4 +1,5 @@
 ﻿using HtmlParser;
+using HtmlParser.Models;
 
 string html = $@"
 <html lang=""en"">
@@ -41,3 +42,4 @@ img?.RemoveAttribute("class");
 img?.SetAttribute("alt", "An image");
 
 Console.WriteLine(doc?.ToHtml());
+Console.WriteLine(img?.GetAttribute("alt"));

@@ -1,24 +1,26 @@
-﻿namespace HtmlParser;
+﻿using HtmlParser.Contracts;
 
-public class HtmlElement(string tagName) : HtmlNode
+namespace HtmlParser.Models;
+
+public class HtmlElement(string tagName) : ICompositeNode
 {
-    private List<HtmlNode> _children = [];
+    private readonly List<IHtmlNode> _children = [];
 
-    public override string TagName { get; } = tagName;
+    private Dictionary<string, string> Attributes { get; set; } = [];
+    
+    public string TagName { get; } = tagName;
 
-    public Dictionary<string, string> Attributes { get; set; } = [];
-
-    public override void Add(HtmlNode node)
+    public void Add(IHtmlNode node)
     {
         _children.Add(node);
     }
 
-    public override void Remove(HtmlNode node)
+    public void Remove(IHtmlNode node)
     {
         _children.Remove(node);
     }
 
-    public override List<HtmlNode> GetChildren()
+    public List<IHtmlNode> GetChildren()
     {
         return _children;
     }
@@ -27,7 +29,7 @@ public class HtmlElement(string tagName) : HtmlNode
     {
         _children.Clear();
 
-        Add(new TextNode(text));
+        Add(new TextElement(text));
     }
 
     public void SetAttribute(string name, string value)
@@ -40,14 +42,7 @@ public class HtmlElement(string tagName) : HtmlNode
         Attributes.Remove(name);
     }
 
-    public string? GetAttribute(string name)
-    {
-        if (Attributes.TryGetValue(name, out string? value))
-        {
-            return value;
-        }
-        return null;
-    }
+    public string? GetAttribute(string name) => Attributes.GetValueOrDefault(name);
 
     public HtmlElement? QuerySelector(string selector)
     {
@@ -85,7 +80,7 @@ public class HtmlElement(string tagName) : HtmlNode
         return matchingElements;
     }
 
-    public override string ToHtml()
+    public string ToHtml()
     {
         var attributes = string.Join(" ", Attributes.Select(a => $"{a.Key}=\"{a.Value}\""));
         var openingTag = string.IsNullOrEmpty(attributes) ? $"<{TagName}>" : $"<{TagName} {attributes}>";
@@ -109,26 +104,26 @@ public class HtmlElement(string tagName) : HtmlNode
             var classAttr = GetAttribute("class");
             return classAttr != null && classAttr.Split(' ').Contains(className);
         }
-        else if (selector.StartsWith("#"))
+
+        if (selector.StartsWith("#"))
         {
             var id = selector.Substring(1);
             return GetAttribute("id") == id;
         }
-        else if (selector.StartsWith("[") && selector.EndsWith("]"))
-        {
-            var attrSelector = selector.Trim('[', ']');
-            var parts = attrSelector.Split('=');
-            var attrName = parts[0];
-            var attrValue = parts.Length > 1 ? parts[1].Trim('"', '\'') : null;
 
-            if (Attributes.TryGetValue(attrName, out string? value))
-            {
-                return attrValue == null || value == attrValue;
-            }
-        }
-        else
+        if (!selector.StartsWith("[") || !selector.EndsWith("]"))
         {
             return TagName == selector;
+        }
+        
+        var attrSelector = selector.Trim('[', ']');
+        var parts = attrSelector.Split('=');
+        var attrName = parts[0];
+        var attrValue = parts.Length > 1 ? parts[1].Trim('"', '\'') : null;
+
+        if (Attributes.TryGetValue(attrName, out string? value))
+        {
+            return attrValue == null || value == attrValue;
         }
 
         return false;
