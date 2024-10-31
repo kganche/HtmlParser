@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlParser", "HtmlParser\Ht
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{3EA324BD-BCAB-4C5A-AB7C-8BD076DF5877}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{61897131-242E-488D-A0EB-452655D221FC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{BE7216AD-F010-403A-9B4B-AEDE97354166}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlParserTests", "HtmlParserTests\HtmlParserTests.csproj", "{792FDD3E-0F82-4468-BAEA-49F8A57402BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,11 +27,20 @@ Global
 		{3EA324BD-BCAB-4C5A-AB7C-8BD076DF5877}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3EA324BD-BCAB-4C5A-AB7C-8BD076DF5877}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3EA324BD-BCAB-4C5A-AB7C-8BD076DF5877}.Release|Any CPU.Build.0 = Release|Any CPU
+		{792FDD3E-0F82-4468-BAEA-49F8A57402BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{792FDD3E-0F82-4468-BAEA-49F8A57402BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{792FDD3E-0F82-4468-BAEA-49F8A57402BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{792FDD3E-0F82-4468-BAEA-49F8A57402BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C2DF37D-A2D3-4A3D-B44D-7F91677BAA89}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3EA324BD-BCAB-4C5A-AB7C-8BD076DF5877} = {61897131-242E-488D-A0EB-452655D221FC}
+		{8931C58B-CB65-4184-9FC6-5141CE8AB2BE} = {61897131-242E-488D-A0EB-452655D221FC}
+		{792FDD3E-0F82-4468-BAEA-49F8A57402BD} = {BE7216AD-F010-403A-9B4B-AEDE97354166}
 	EndGlobalSection
 EndGlobal
